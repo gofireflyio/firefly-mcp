@@ -1,0 +1,15 @@
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+.idea/
+.DS_Store
+bin/
+registry.terraform.io
+.env
+.env.dev
+dist/
+gitleaks.toml
