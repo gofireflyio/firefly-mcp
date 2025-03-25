@@ -1,0 +1,37 @@
+name: FIREFLY-PR-COMPLIANCE
+
+on:
+  pull_request:
+    types: ["opened", "reopened", "edited", "synchronize"]
+    branches: ["main", "master"]
+    
+jobs:
+  firefly-pr-compliance-checks:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Validate PR and Branch Name Associated with JIRA Ticket Prefix
+      env:
+        branch_name: ${{ github.head_ref }}
+        pr_title: ${{ github.event.pull_request.title }}
+      run: |
+        branch_name_lo=$( echo "$branch_name" | awk '{print tolower($0)}' )
+        pr_title_lo=$( echo "$pr_title" | awk '{print tolower($0)}' )
+        exit_code=0
+        
+        if [[ ! "$branch_name_lo" =~ ^infl\-[0-9]{4}.*$ ]]; then
+          echo
+          echo "[COMPLIANCE ERROR - BRANCH NAME]"
+          echo "Branch Name: $branch_name"
+          echo "-> Please ensure that your branch name starts with the appropriate Jira ticket prefix (e.g. INFL-1234-branch-name)"
+          exit_code=1
+        fi
+
+        if [[ ! "$pr_title_lo" =~ ^infl(\-| )[0-9]{4}.*$ ]]; then
+          echo
+          echo "[COMPLIANCE ERROR - PULL REQUEST TITLE]"
+          echo "Pull Request Title: $pr_title"
+          echo "-> Please ensure that your PR title starts with the appropriate Jira ticket prefix (e.g. INFL-1234-pull-request-title)"
+          exit_code=1
+        fi
+
+        exit $exit_code
