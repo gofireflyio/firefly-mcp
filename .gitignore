@@ -13,3 +13,14 @@ registry.terraform.io
 .env.dev
 dist/
 gitleaks.toml
+
+# TypeScript related ignores
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.npm
+*.tsbuildinfo
+.eslintcache
+coverage/
+.nyc_output/
