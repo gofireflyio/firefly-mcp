@@ -4,10 +4,13 @@ interface LoginArgs {
 }
 
 export interface InventoryArgs {
-    pageNumber?: number;
-    assetType?: string;
+    assetTypes?: string[];
     assetState?: "managed" | "unmanaged" | "ghost" | "modified";
-    modifiedSince?: string;
+    providerIds?: string[];
+    responseSize?: number;
+    assetNames?: string[];
+    arns?: string[];
+    providerTypes?: string[];
 }
 
 export interface CodifyArgs {
@@ -33,11 +36,13 @@ export class FireflyClient {
             throw new Error("Access key and secret key are required for authentication");
         }
 
+        this.accessToken = null;
+
         this.login();
     }
 
     private getAuthHeaders() {
-        if (!this.accessToken || Date.now() >= this.tokenExpiry) {
+        if (!this.accessToken) {
             throw new Error("Not authenticated or token expired. Call login() first.");
         }
 
@@ -74,12 +79,12 @@ export class FireflyClient {
 
             const data = await response.json();
             this.accessToken = data.accessToken;
-            this.tokenExpiry = data.expiresAt * 1000; // Convert to milliseconds
-
+            
+            console.log("Logged in to Firefly successfully");
+            
             return {
                 success: true,
                 message: "Successfully authenticated",
-                expiresAt: new Date(this.tokenExpiry).toISOString(),
             };
         } catch (error) {
             console.error("Login error:", error);
@@ -93,10 +98,14 @@ export class FireflyClient {
                 method: "POST",
                 headers: this.getAuthHeaders(),
                 body: JSON.stringify({
-                    pageNumber: args.pageNumber || 1,
-                    assetType: args.assetType,
-                    assetState: args.assetState,
-                    modifiedSince: args.modifiedSince,
+                    size: args.responseSize || 50,
+                    // Only include parameters in the request if they are provided
+                    ...(args.assetTypes ? { assetTypes: args.assetTypes } : {}),
+                    ...(args.assetState ? { state: args.assetState } : {}),
+                    ...(args.providerIds ? { providerIds: args.providerIds } : {}),
+                    ...(args.assetNames ? { names: args.assetNames } : {}),
+                    ...(args.arns ? { arns: args.arns } : {}),
+                    ...(args.providerTypes ? { providerTypes: args.providerTypes } : {}),
                 }),
             });
 

@@ -8,24 +8,50 @@ export const InventoryTool: Tool = {
     inputSchema: {
         type: "object",
         properties: {
-            pageNumber: {
+            responseSize: {
                 type: "number",
-                description: "Page number requested. Each page holds 50 results.",
-                default: 1,
+                description: "Number of results to return. Each page holds 50 results.",
+                default: 50,
             },
-            assetType: {
-                type: "string",
-                description: "(Optional) Terraform asset type query filter (e.g., aws_s3_bucket, aws_instance)",
+            assetTypes: {
+                type: "array",
+                description: "(Optional) Terraform asset types query filter (e.g., aws_s3_bucket, aws_instance)",
+                items: {
+                    type: "string",
+                },
             },
             assetState: {
                 type: "string",
                 description: "(Optional) Firefly asset state query filter",
                 enum: ["managed", "unmanaged", "ghost", "modified"],
             },
-            modifiedSince: {
-                type: "string",
-                description: "(Optional) Return assets modified since provided date in YYYY-MM-DD format",
-                format: "date",
+            providerIds: {
+                type: "array",
+                description: "(Optional) Provider IDs (e.g., aws account number, gcp project id) to filter by",
+                items: {
+                    type: "string",
+                },
+            },
+            assetNames: {
+                type: "array",
+                description: "(Optional) Asset names to filter by",
+                items: {
+                    type: "string",
+                },
+            },
+            arns: {
+                type: "array",
+                description: "(Optional) ARNs to filter by",
+                items: {
+                    type: "string",
+                },
+            },
+            providerTypes: {
+                type: "array",
+                description: "(Optional) Provider types to filter by",
+                items: {
+                    type: "string",
+                },
             },
         },
     },
