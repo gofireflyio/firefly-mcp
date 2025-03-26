@@ -1,11 +1,7 @@
 name: Publish to NPM
 
 on:
-  push:
-    branches:
-      - main
-    tags:
-      - 'v*'
+  workflow_dispatch:
 
 jobs:
   publish:
@@ -31,7 +27,7 @@ jobs:
 
     - name: Publish package to NPM
       env:
-        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        NPM_TOKEN: ${{secrets.NPM_TOKEN}}
       run: npm publish --access public
 
     - name: Link to NPX
