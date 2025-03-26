@@ -114,4 +114,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-For support, please visit [Firefly's documentation](https://firefly.ai/docs) or create an issue in this repository.
+For support, please visit [Firefly's documentation](https://docs.firefly.ai/firefly-docs) or create an issue in this repository.
