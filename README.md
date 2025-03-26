@@ -1,4 +1,4 @@
-[![Firefly](./assets/firefly-logo.png)](https://firefly.ai)
+[![Firefly](https://infralight-templates-public.s3.amazonaws.com/company-logos/firefly_logo_white.png)](https://firefly.ai)
 
 # Firefly MCP Server
 
@@ -48,7 +48,8 @@ Update the `mcp.json` file with the following:
 {
   "mcpServers": {
     "firefly": {
-      "command": "npx @fireflyai/firefly-mcp",
+      "command": "npx",
+      "args": ["-y", "@fireflyai/firefly-mcp"],
       "env": {
         "FIREFLY_ACCESS_KEY": "your_access_key",
         "FIREFLY_SECRET_KEY": "your_secret_key"
@@ -60,7 +61,7 @@ Update the `mcp.json` file with the following:
 
 Run the MCP server using one of the methods above with the following command:
 ```bash
-npx @fireflyai/firefly-mcp --stdio
+npx @fireflyai/firefly-mcp --sse --port 6001
 ```
 
 Update the `mcp.json` file with the following:

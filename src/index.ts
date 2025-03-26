@@ -19,7 +19,7 @@ async function main() {
     const argv = minimist(process.argv.slice(2));
     const accessKey = argv["access-key"] || process.env.FIREFLY_ACCESS_KEY;
     const secretKey = argv["secret-key"] || process.env.FIREFLY_SECRET_KEY;
-    const sse = process.argv.includes("sse");
+    const sse = process.argv.includes("--sse");
     const port = argv["port"] || 6001;
 
     // Create MCP server
