@@ -11,6 +11,8 @@ export interface InventoryArgs {
     assetNames?: string[];
     arns?: string[];
     providerTypes?: string[];
+    modifiedSince?: string;
+    freeTextSearch?: string;
 }
 
 export interface CodifyArgs {
@@ -19,7 +21,6 @@ export interface CodifyArgs {
     iacType: string;
     provider: string;
     accountNumber: string;
-    codificationMode?: string;
 }
 
 export class FireflyClient {
@@ -98,6 +99,7 @@ export class FireflyClient {
                 method: "POST",
                 headers: this.getAuthHeaders(),
                 body: JSON.stringify({
+                    includeConfigration: false,
                     size: args.responseSize || 50,
                     // Only include parameters in the request if they are provided
                     ...(args.assetTypes ? { assetTypes: args.assetTypes } : {}),
@@ -106,6 +108,8 @@ export class FireflyClient {
                     ...(args.assetNames ? { names: args.assetNames } : {}),
                     ...(args.arns ? { arns: args.arns } : {}),
                     ...(args.providerTypes ? { providerTypes: args.providerTypes } : {}),
+                    ...(args.modifiedSince ? { modifiedSince: args.modifiedSince } : {}),
+                    ...(args.freeTextSearch ? { freeTextSearch: args.freeTextSearch } : {}),
                 }),
             });
 
@@ -132,7 +136,6 @@ export class FireflyClient {
                     iacType: args.iacType,
                     provider: args.provider,
                     accountNumber: args.accountNumber,
-                    codificationMode: args.codificationMode,
                 }),
             });
 

@@ -53,6 +53,14 @@ export const InventoryTool: Tool = {
                     type: "string",
                 },
             },
+            modifiedSince: {
+                type: "string",
+                description: "(Optional) Modified since date (e.g., 2024-01-01)",
+            },
+            freeTextSearch: {
+                type: "string",
+                description: "(Optional) Free text search query value in the assets configuration for searches across all fields (e.g., 'AdministratorAccess', 't3.micro')",
+            },
         },
     },
 };
@@ -83,11 +91,7 @@ export const CodifyTool: Tool = {
             accountNumber: {
                 type: "string",
                 description: "The account number where the resource exists",
-            },
-            codificationMode: {
-                type: "string",
-                description: "Codification mode",
-            },
+            }
         },
         required: ["assetType", "assetId", "iacType", "provider", "accountNumber"],
     },
