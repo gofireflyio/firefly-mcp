@@ -70,7 +70,7 @@ export const CodifyTool: Tool = {
             },
             assetId: {
                 type: "string",
-                description: "The ID of the resource to codify",
+                description: "The ID of the resource to codify. Usually the resource ARN",
             },
             iacType: {
                 type: "string",

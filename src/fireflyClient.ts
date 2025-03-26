@@ -115,6 +115,8 @@ export class FireflyClient {
                 throw new Error(`Inventory query failed: ${response.status} ${errorText}`);
             }
 
+            console.log("Inventory query successful");
+
             return await response.json();
         } catch (error) {
             console.error("Inventory error:", error);
@@ -140,6 +142,8 @@ export class FireflyClient {
                 const errorText = await response.text();
                 throw new Error(`Codification failed: ${response.status} ${errorText}`);
             }
+
+            console.log("Codification successful");
 
             return await response.json();
         } catch (error) {
