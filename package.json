@@ -22,7 +22,10 @@
     "keywords": [
         "firefly",
         "mcp",
-        "server"
+        "iac",
+        "terraform",
+        "cloudformation",
+        "pulumi"
     ],
     "author": "Firefly.io",
     "license": "MIT",
