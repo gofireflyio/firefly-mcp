@@ -41,27 +41,37 @@ npx @fireflyai/firefly-mcp --access-key your_access_key --secret-key your_secret
 
 ## Usage
 
-### Using with Claude
+### Stdio
 
-1. Start the MCP server using one of the methods above
-2. In Claude, use the following format to query resources:
-
-#### Example:
-
-##### Prompt 
+Update the `mcp.json` file with the following:  
+```bash
+{
+  "mcpServers": {
+    "firefly": {
+      "command": "npx @fireflyai/firefly-mcp",
+      "env": {
+        "FIREFLY_ACCESS_KEY": "your_access_key",
+        "FIREFLY_SECRET_KEY": "your_secret_key"
+      }
+    }
+  }
+}
 ```
-Find all EC2 instances in AWS account
+
+Run the MCP server using one of the methods above with the following command:
+```bash
+npx @fireflyai/firefly-mcp --stdio
 ```
 
-##### Response
-```
-0123456789012:
-- arn:aws:ec2:us-west-2:0123456789012:instance/i-1234567890abcdef0
-- arn:aws:ec2:us-west-2:0123456789012:instance/i-1234567890abcdef1
-
-0123456789013:
-- arn:aws:ec2:us-west-2:0123456789013:instance/i-1234567890abcdef2
-- arn:aws:ec2:us-west-2:0123456789013:instance/i-1234567890abcdef3
+Update the `mcp.json` file with the following:
+```bash
+{
+  "mcpServers": {
+    "firefly": {
+      "url": "http://localhost:6001/sse"
+    }
+  }
+}
 ```
 
 ### Using with Cursor
