@@ -10,7 +10,6 @@ export interface InventoryArgs {
     responseSize?: number;
     assetNames?: string[];
     arns?: string[];
-    providerTypes?: string[];
     modifiedSince?: string;
     freeTextSearch?: string;
 }
@@ -26,7 +25,6 @@ export interface CodifyArgs {
 export class FireflyClient {
     private baseUrl: string = "https://api.firefly.ai/api/v1.0";
     private accessToken: string | null = null;
-    private tokenExpiry: number = 0;
 
     constructor(private accessKey?: string, private secretKey?: string) {
         // Use environment variables if not provided as constructor arguments
@@ -107,7 +105,6 @@ export class FireflyClient {
                     ...(args.providerIds ? { providerIds: args.providerIds } : {}),
                     ...(args.assetNames ? { names: args.assetNames } : {}),
                     ...(args.arns ? { arns: args.arns } : {}),
-                    ...(args.providerTypes ? { providerTypes: args.providerTypes } : {}),
                     ...(args.modifiedSince ? { modifiedSince: args.modifiedSince } : {}),
                     ...(args.freeTextSearch ? { freeTextSearch: args.freeTextSearch } : {}),
                 }),

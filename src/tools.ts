@@ -46,13 +46,6 @@ export const InventoryTool: Tool = {
                     type: "string",
                 },
             },
-            providerTypes: {
-                type: "array",
-                description: "(Optional) Provider types to filter by",
-                items: {
-                    type: "string",
-                },
-            },
             modifiedSince: {
                 type: "string",
                 description: "(Optional) Modified since date (e.g., 2024-01-01)",
