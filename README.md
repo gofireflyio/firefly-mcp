@@ -98,7 +98,10 @@ resource "aws_instance" "ubuntu-prod" {
 
 ## Demo
 
-[Placeholder for GIF showing the MCP server in action]
+<video width="100%" controls>
+  <source src="https://infralight-templates-public.s3.amazonaws.com/videos/firefly-mcp.mov" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ## Contributing
 
