@@ -98,10 +98,7 @@ resource "aws_instance" "ubuntu-prod" {
 
 ## Demo
 
-<video width="100%" controls>
-  <source src="https://infralight-templates-public.s3.amazonaws.com/videos/firefly-mcp.mov" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+https://github.com/user-attachments/assets/0986dff5-d433-4d82-9564-876b8215b61e
 
 ## Contributing
 
