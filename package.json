@@ -12,7 +12,7 @@
         "prepublishOnly": "npm run build",
         "start": "node dist/index.js",
         "dev": "ts-node src/index.ts",
-        "test": "jest"
+        "test": "jest --config jest.config.js"
     },
     "files": [
         "dist",
