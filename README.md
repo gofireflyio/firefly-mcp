@@ -2,7 +2,7 @@
 
 # Firefly MCP Server
 
-The Firefly MCP (Management Control Protocol) server is a TypeScript-based server that enables seamless integration with the Firefly platform. It allows you to discover, manage, and codify resources across your Cloud and SaaS accounts connected to Firefly.
+The Firefly MCP (Model Context Protocol) server is a TypeScript-based server that enables seamless integration with the Firefly platform. It allows you to discover, manage, and codify resources across your Cloud and SaaS accounts connected to Firefly.
 
 ## Features
 
