@@ -36,7 +36,7 @@
     "bugs": {
         "url": "https://github.com/gofireflyio/firefly-mcp/issues"
     },
-    "homepage": "https://github.com/gofireflyio/firefly-mcp#readme",
+    "homepage": "https://firefly.ai",
     "devDependencies": {
         "@types/express": "^5.0.1",
         "@types/jest": "^29.5.0",
