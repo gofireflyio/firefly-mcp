@@ -104,20 +104,20 @@ async function main() {
         let transport: SSEServerTransport;
 
         app.get("/sse", async (req: express.Request, res: express.Response) => {
-          console.log("Received connection");
+          console.debug("Received connection");
           transport = new SSEServerTransport("/message", res);
           await server.connect(transport);
         });
         
         app.post("/message", async (req: express.Request, res: express.Response) => {
-          console.log("Received message");
+          console.debug("Received message");
         
           await transport.handlePostMessage(req, res);
         });
         
         
         app.listen(port, () => {
-          console.log(`Server is running on port ${port}`);
+          console.debug(`Server is running on port ${port}`);
         });
     } else {
         // Connect server to Stdio transport

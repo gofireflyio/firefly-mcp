@@ -79,7 +79,7 @@ export class FireflyClient {
             const data = await response.json();
             this.accessToken = data.accessToken;
             
-            console.log("Logged in to Firefly successfully");
+            console.debug("Logged in to Firefly successfully");
             
             return {
                 success: true,
@@ -115,7 +115,7 @@ export class FireflyClient {
                 throw new Error(`Inventory query failed: ${response.status} ${errorText}`);
             }
 
-            console.log("Inventory query successful");
+            console.debug("Inventory query successful");
 
             return await response.json();
         } catch (error) {
@@ -143,7 +143,7 @@ export class FireflyClient {
                 throw new Error(`Codification failed: ${response.status} ${errorText}`);
             }
 
-            console.log("Codification successful");
+            console.debug("Codification successful");
 
             return await response.json();
         } catch (error) {
