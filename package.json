@@ -52,6 +52,7 @@
         "commander": "^10.0.1",
         "dotenv": "^16.0.3",
         "express": "^5.0.1",
+        "loglevel": "^1.9.2",
         "minimist": "^1.2.8"
     },
     "engines": {

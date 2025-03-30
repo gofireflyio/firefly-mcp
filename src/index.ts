@@ -11,16 +11,24 @@ import minimist from 'minimist';
 import { FireflyClient, InventoryArgs, CodifyArgs } from './fireflyClient';
 import { InventoryTool, CodifyTool } from './tools';
 import express from 'express';
+import * as logger from 'loglevel';
 
 async function main() {
-    console.error("Starting Firefly MCP Server...");
-
     // Parse command line arguments
     const argv = minimist(process.argv.slice(2));
     const accessKey = argv["access-key"] || process.env.FIREFLY_ACCESS_KEY;
     const secretKey = argv["secret-key"] || process.env.FIREFLY_SECRET_KEY;
     const sse = process.argv.includes("--sse");
+    const debug = process.argv.includes("debug");
     const port = argv["port"] || 6001;
+
+    if (debug) {
+        logger.setLevel(logger.levels.DEBUG, true);
+    } else {
+        logger.setLevel(logger.levels.SILENT, true);
+    }
+
+    logger.info("Starting Firefly MCP Server...");
 
     // Create MCP server
     const server = new Server(
@@ -39,13 +47,13 @@ async function main() {
     );
 
     // Create Firefly client
-    const fireflyClient = new FireflyClient(accessKey, secretKey);
+    const fireflyClient = new FireflyClient(logger, accessKey, secretKey);
 
     // Handle tool requests
     server.setRequestHandler(
         CallToolRequestSchema,
         async (request: CallToolRequest) => {
-            console.error("Received CallToolRequest:", request);
+            logger.error("Received CallToolRequest:", request);
             try {
                 const toolName = request.params.name;
                 const args = request.params.arguments || {};
@@ -75,7 +83,7 @@ async function main() {
                         throw new Error(`Unknown tool: ${toolName}`);
                 }
             } catch (error) {
-                console.error("Error executing tool:", error);
+                logger.error("Error executing tool:", error);
                 return {
                     content: [
                         {
@@ -92,7 +100,7 @@ async function main() {
 
     // Handle tool listing
     server.setRequestHandler(ListToolsRequestSchema, async () => {
-        console.error("Received ListToolsRequest");
+        logger.error("Received ListToolsRequest");
         return {
             tools: [InventoryTool, CodifyTool],
         };
@@ -104,31 +112,31 @@ async function main() {
         let transport: SSEServerTransport;
 
         app.get("/sse", async (req: express.Request, res: express.Response) => {
-          console.debug("Received connection");
+          logger.info("Received connection");
           transport = new SSEServerTransport("/message", res);
           await server.connect(transport);
         });
         
         app.post("/message", async (req: express.Request, res: express.Response) => {
-          console.debug("Received message");
+          logger.info("Received message");
         
           await transport.handlePostMessage(req, res);
         });
         
         
         app.listen(port, () => {
-          console.debug(`Server is running on port ${port}`);
+          logger.info(`Server is running on port ${port}`);
         });
     } else {
         // Connect server to Stdio transport
         const transport = new StdioServerTransport();
-        console.error("Connecting server to transport...");
+        logger.info("Connecting server to transport...");
         await server.connect(transport);
-        console.error("Server connected to transport");
+        logger.info("Server connected to transport");
     }
 }
 
 main().catch((error) => {
-    console.error("Fatal error in main():", error);
+    logger.error("Fatal error in main():", error);
     process.exit(1);
 });

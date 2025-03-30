@@ -25,8 +25,11 @@ export interface CodifyArgs {
 export class FireflyClient {
     private baseUrl: string = "https://api.firefly.ai/api/v1.0";
     private accessToken: string | null = null;
-
-    constructor(private accessKey?: string, private secretKey?: string) {
+    private logger: any;
+    
+    constructor(logger: any, private accessKey?: string, private secretKey?: string) {
+        this.logger = logger;
+        
         // Use environment variables if not provided as constructor arguments
         this.accessKey = accessKey || process.env.FIREFLY_ACCESS_KEY;
         this.secretKey = secretKey || process.env.FIREFLY_SECRET_KEY;
@@ -79,14 +82,14 @@ export class FireflyClient {
             const data = await response.json();
             this.accessToken = data.accessToken;
             
-            console.debug("Logged in to Firefly successfully");
+            this.logger.info("Logged in to Firefly successfully");
             
             return {
                 success: true,
                 message: "Successfully authenticated",
             };
         } catch (error) {
-            console.error("Login error:", error);
+            this.logger.error("Login error:", error);
             throw error;
         }
     }
@@ -115,11 +118,11 @@ export class FireflyClient {
                 throw new Error(`Inventory query failed: ${response.status} ${errorText}`);
             }
 
-            console.debug("Inventory query successful");
+            this.logger.info("Inventory query successful");
 
             return await response.json();
         } catch (error) {
-            console.error("Inventory error:", error);
+            this.logger.error("Inventory error:", error);
             throw error;
         }
     }
@@ -143,11 +146,11 @@ export class FireflyClient {
                 throw new Error(`Codification failed: ${response.status} ${errorText}`);
             }
 
-            console.debug("Codification successful");
+            this.logger.info("Codification successful");
 
             return await response.json();
         } catch (error) {
-            console.error("Codify error:", error);
+            this.logger.error("Codify error:", error);
             throw error;
         }
     }
