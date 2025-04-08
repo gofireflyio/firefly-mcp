@@ -1,4 +1,4 @@
-import { InventoryTool, CodifyTool } from '../tools';
+import { InventoryTool, CodifyTool } from './tools';
 
 describe('Tools', () => {
   // Test InventoryTool configuration

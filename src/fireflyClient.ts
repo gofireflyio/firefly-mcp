@@ -114,6 +114,11 @@ export class FireflyClient {
             });
 
             if (!response.ok) {
+                if (response.status === 401) {
+                    this.logger.info("Unauthorized. Attempting to re-login...");
+                    await this.login();
+                    return this.inventory(args);
+                }
                 const errorText = await response.text();
                 throw new Error(`Inventory query failed: ${response.status} ${errorText}`);
             }
@@ -142,6 +147,10 @@ export class FireflyClient {
             });
 
             if (!response.ok) {
+                if (response.status === 401) {
+                    await this.login();
+                    return this.codify(args);
+                }
                 const errorText = await response.text();
                 throw new Error(`Codification failed: ${response.status} ${errorText}`);
             }

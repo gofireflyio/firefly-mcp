@@ -22,7 +22,7 @@ export const InventoryTool: Tool = {
             },
             assetState: {
                 type: "string",
-                description: "(Optional) Firefly asset state query filter",
+                description: "(Optional) Firefly asset state query filter (Codified is managed, drifted is modified)",
                 enum: ["managed", "unmanaged", "ghost", "modified"],
             },
             providerIds: {
