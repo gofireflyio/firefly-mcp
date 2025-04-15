@@ -1,3 +1,4 @@
+[![smithery badge](https://smithery.ai/badge/@fireflyai/firefly-mcp)](https://smithery.ai/server/@fireflyai/firefly-mcp)
 [![Firefly](https://infralight-templates-public.s3.amazonaws.com/company-logos/firefly_logo_white.png)](https://firefly.ai)
 
 # Firefly MCP Server
@@ -18,6 +19,14 @@ The Firefly MCP (Model Context Protocol) server is a TypeScript-based server tha
 - Firefly account with generated access keys
 
 ## Installation
+
+### Installing via Smithery
+
+To install Firefly MCP Server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@fireflyai/firefly-mcp):
+
+```bash
+npx -y @smithery/cli install @fireflyai/firefly-mcp --client claude
+```
 
 You can run the Firefly MCP server directly using NPX:
 
