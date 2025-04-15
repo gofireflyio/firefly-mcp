@@ -1,0 +1,38 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required:
+      - accessKey
+      - secretKey
+    properties:
+      accessKey:
+        type: string
+        description: Firefly access key
+      secretKey:
+        type: string
+        description: Firefly secret key
+      port:
+        type: number
+        default: 6001
+        description: Port to run the MCP server
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
+    (config) => ({
+      // Running in stdio mode as it is more deterministic for local testing.
+      // The server uses process.stdin/stdout when --sse flag is absent.
+      command: 'node',
+      args: ['dist/index.js', '--port', config.port.toString()],
+      env: {
+        FIREFLY_ACCESS_KEY: config.accessKey,
+        FIREFLY_SECRET_KEY: config.secretKey
+      }
+    })
+  exampleConfig:
+    accessKey: dummy_access_key
+    secretKey: dummy_secret_key
+    port: 6001
