@@ -19,13 +19,14 @@ async function main() {
     const accessKey = argv["access-key"] || process.env.FIREFLY_ACCESS_KEY;
     const secretKey = argv["secret-key"] || process.env.FIREFLY_SECRET_KEY;
     const sse = process.argv.includes("--sse");
+    const hosting = process.argv.includes("--hosting");
     const debug = process.argv.includes("debug");
     const port = argv["port"] || 6001;
     const transports: { [sessionId: string]: {transport: SSEServerTransport, fireflyClient: FireflyClient} } = {};
     
-    let stdioFireflyClient: FireflyClient;
-    if (!sse && accessKey && secretKey) {
-        stdioFireflyClient = new FireflyClient(logger, accessKey, secretKey);
+    let localFireflyClient: FireflyClient;
+    if (!hosting && accessKey && secretKey) {
+        localFireflyClient = new FireflyClient(logger, accessKey, secretKey);
     }
 
     if (debug) {
@@ -62,8 +63,8 @@ async function main() {
                 const args = request.params.arguments || {};
 
                 let fireflyClient: FireflyClient | null = null;
-                if (!sse) {
-                    fireflyClient = stdioFireflyClient;
+                if (!hosting) {
+                    fireflyClient = localFireflyClient;
                 }
 
                 if (extra.sessionId) {
@@ -131,11 +132,11 @@ async function main() {
         };
     });
 
-    if (sse) {
+    if (hosting) {
         const app = express();
 
         app.get("/sse", async (req: express.Request, res: express.Response) => {
-            logger.info("Received connection");
+            logger.debug("Received connection");
 
             let basicAuth = null;
             const authHeader = req.headers.authorization;
@@ -170,7 +171,7 @@ async function main() {
         });
 
         app.post("/message", async (req: express.Request, res: express.Response) => {
-            logger.info("Received message");
+            logger.debug("Received message");
             const sessionId = req.query.sessionId as string;
             const transport = transports[sessionId];
             if (!transport) {
@@ -184,6 +185,27 @@ async function main() {
 
         app.listen(port, () => {
             logger.info(`Server is running on port ${port}`);
+        });
+    } else if (sse) {
+        const app = express();
+
+        let transport: SSEServerTransport;
+
+        app.get("/sse", async (req: express.Request, res: express.Response) => {
+          logger.debug("Received connection");
+          transport = new SSEServerTransport("/message", res);
+          await server.connect(transport);
+        });
+        
+        app.post("/message", async (req: express.Request, res: express.Response) => {
+          logger.debug("Received message");
+        
+          await transport.handlePostMessage(req, res);
+        });
+        
+        
+        app.listen(port, () => {
+          logger.info(`Server is running on port ${port}`);
         });
     } else {
         // Connect server to Stdio transport
