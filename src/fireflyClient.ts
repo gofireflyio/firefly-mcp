@@ -39,8 +39,6 @@ export class FireflyClient {
         }
 
         this.accessToken = null;
-
-        this.login();
     }
 
     private getAuthHeaders() {

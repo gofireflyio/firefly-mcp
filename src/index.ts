@@ -30,6 +30,7 @@ async function main() {
             throw new Error("Missing access-key or secret-key");
         }
         localFireflyClient = new FireflyClient(logger, accessKey, secretKey);
+        await localFireflyClient.login();
     }
 
     if (debug) {
@@ -167,6 +168,7 @@ async function main() {
             const transport = new SSEServerTransport("/message", res);
             try {
                 const fireflyClient = new FireflyClient(logger, accessKey, secretKey);
+                await fireflyClient.login();
                 transports[transport.sessionId] = {transport, fireflyClient};
             } catch (error) {
                 if (error instanceof Error && error.message.includes("Authentication failed")) {
