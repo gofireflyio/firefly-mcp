@@ -25,7 +25,10 @@ async function main() {
     const transports: { [sessionId: string]: {transport: SSEServerTransport, fireflyClient: FireflyClient} } = {};
     
     let localFireflyClient: FireflyClient;
-    if (!hosting && accessKey && secretKey) {
+    if (!hosting) {
+        if (!accessKey || !secretKey) {
+            throw new Error("Missing access-key or secret-key");
+        }
         localFireflyClient = new FireflyClient(logger, accessKey, secretKey);
     }
 
