@@ -165,8 +165,19 @@ async function main() {
             }
 
             const transport = new SSEServerTransport("/message", res);
-            const fireflyClient = new FireflyClient(logger, accessKey, secretKey);
-            transports[transport.sessionId] = {transport, fireflyClient};
+            try {
+                const fireflyClient = new FireflyClient(logger, accessKey, secretKey);
+                transports[transport.sessionId] = {transport, fireflyClient};
+            } catch (error) {
+                if (error instanceof Error && error.message.includes("Authentication failed")) {
+                    logger.error("Authentication failed:", error);
+                    res.status(401).send("Unauthorized");
+                    return;
+                } 
+                logger.error("Error creating FireflyClient:", error);
+                res.status(500).send("Internal Server Error");
+                return;
+            }
             res.on("close", () => {
                 delete transports[transport.sessionId];
             });
