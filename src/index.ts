@@ -67,7 +67,7 @@ async function main() {
                     fireflyClient = localFireflyClient;
                 }
 
-                if (extra.sessionId) {
+                if (hosting && extra.sessionId) {
                     const sessionId = extra.sessionId;
                     const transport = transports[sessionId];
                     if (!transport) {
