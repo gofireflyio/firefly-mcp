@@ -1,6 +1,6 @@
 name: CI MCP-SERVER Deploy
 run-name: ${{ startsWith(inputs.cluster, 'env') && 'dev' || inputs.cluster == 'eu' && 'stag' || 'prod' }}-${{ inputs.cluster }}-mcp-server Deployment Pipeline
-
+CC
 on:
   workflow_dispatch:
     inputs:
@@ -18,7 +18,7 @@ on:
 
 jobs:
   call-node-workflow:
-    uses: infralight/.github/.github/workflows/node-ecr-image-managed.yaml@master
+    uses: infralight/.github/.github/workflows/nodejs-ecr-image-managed_v2.yaml@master
     with:
       arm64: true
       node-version: '14.x'
