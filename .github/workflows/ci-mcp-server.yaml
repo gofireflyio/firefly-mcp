@@ -1,0 +1,59 @@
+name: CI MCP-SERVER Deploy
+run-name: ${{ startsWith(inputs.cluster, 'env') && 'dev' || inputs.cluster == 'eu' && 'stag' || 'prod' }}-${{ inputs.cluster }}-mcp-server Deployment Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      cluster:
+        type: choice
+        description: 'Cluster'
+        required: true
+        options:
+          - 'env3'
+          - 'env2'
+          - 'env1'
+          - 'eu'
+          - 'backend-cluster'
+        default: 'env1'
+
+jobs:
+  call-node-workflow:
+    uses: infralight/.github/.github/workflows/node-ecr-image-managed.yaml@master
+    with:
+      arm64: true
+      node-version: '14.x'
+      run-tests: false
+      branch: ${{ github.ref_name }}
+      ecr-prefix: ''
+      event_name: ${{ github.event_name }}
+      app-name: mcp-server
+      latest: true
+      environment: ${{ startsWith(inputs.cluster, 'env') && 'dev' || inputs.cluster == 'eu' && 'stag' || 'prod' }} 
+      cluster: ${{ inputs.cluster }}
+    secrets:
+      GLOBAL_PAT_USERNAME: ${{ secrets.GLOBAL_PAT_USERNAME }}
+      GLOBAL_PAT: ${{ secrets.GLOBAL_PAT }}
+      CI_AWS_CRED_KEY: ${{ secrets.CI_AWS_CRED_KEY }}
+      CI_AWS_CRED_SECRET: ${{ secrets.CI_AWS_CRED_SECRET }}
+      CI_ACCOUNT_ID: ${{ secrets.CI_ACCOUNT_ID }}
+      CI_REGION: ${{ secrets.CI_REGION }}
+
+  argocd-sync:
+    needs: call-node-workflow
+    uses: infralight/.github/.github/workflows/argocd-sync.yaml@master
+    with:
+      appName: mcp-server
+      branch: ${{ github.ref_name }}
+      environment: ${{ startsWith(inputs.cluster, 'env') && 'dev' || inputs.cluster == 'eu' && 'stag' || 'prod' }}
+      cluster: ${{ inputs.cluster }}
+
+
+
+    secrets:
+      CI_ACCOUNT_ID: ${{ secrets.CI_ACCOUNT_ID }}
+      CI_REGION: ${{ secrets.CI_REGION }}
+      CI_ARGOCD: ${{ secrets.CI_ARGOCD }}
+      CI_ARGOCD_TOKEN: ${{ secrets.CI_ARGOCD_TOKEN }}
+      CI_ARGOCD_SERVER: ${{ secrets.CI_ARGOCD_SERVER }}
+      CI_SLACK_WEBHOOK: ${{ secrets.CI_SLACK_WEBHOOK }}
+      CI_PAT: ${{ secrets.GLOBAL_PAT }}
