@@ -16,6 +16,10 @@ on:
           - 'backend-cluster'
         default: 'env1'
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   call-node-workflow:
     uses: infralight/.github/.github/workflows/node-ecr-image-managed.yaml@master
