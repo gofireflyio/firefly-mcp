@@ -50,9 +50,6 @@ jobs:
       branch: ${{ github.ref_name }}
       environment: ${{ startsWith(inputs.cluster, 'env') && 'dev' || inputs.cluster == 'eu' && 'stag' || 'prod' }}
       cluster: ${{ inputs.cluster }}
-
-
-
     secrets:
       CI_ACCOUNT_ID: ${{ secrets.CI_ACCOUNT_ID }}
       CI_REGION: ${{ secrets.CI_REGION }}
