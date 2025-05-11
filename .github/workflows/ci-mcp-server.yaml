@@ -16,10 +16,6 @@ on:
           - 'backend-cluster'
         default: 'env1'
 
-permissions:
-  contents: read
-  id-token: write
-
 jobs:
   call-node-workflow:
     uses: infralight/.github/.github/workflows/node-ecr-image-managed.yaml@master
@@ -50,6 +46,9 @@ jobs:
       branch: ${{ github.ref_name }}
       environment: ${{ startsWith(inputs.cluster, 'env') && 'dev' || inputs.cluster == 'eu' && 'stag' || 'prod' }}
       cluster: ${{ inputs.cluster }}
+
+
+
     secrets:
       CI_ACCOUNT_ID: ${{ secrets.CI_ACCOUNT_ID }}
       CI_REGION: ${{ secrets.CI_REGION }}
@@ -58,3 +57,4 @@ jobs:
       CI_ARGOCD_SERVER: ${{ secrets.CI_ARGOCD_SERVER }}
       CI_SLACK_WEBHOOK: ${{ secrets.CI_SLACK_WEBHOOK }}
       CI_PAT: ${{ secrets.GLOBAL_PAT }}
+      CI_GITHUB_TOKEN: ${{ secrets.CI_GITHUB_TOKEN }}
