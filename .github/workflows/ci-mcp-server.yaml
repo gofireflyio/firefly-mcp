@@ -59,5 +59,3 @@ jobs:
       CI_SLACK_WEBHOOK: ${{ secrets.CI_SLACK_WEBHOOK }}
       CI_PAT: ${{ secrets.GLOBAL_PAT }}
       CI_GITHUB_TOKEN: ${{ secrets.CI_GITHUB_TOKEN }}
-      CI_DOCKERHUB_USERNAME: ${{ secrets.CI_DOCKERHUB_USERNAME }}
-      CI_DOCKERHUB_TOKEN: ${{ secrets.CI_DOCKERHUB_TOKEN }}
