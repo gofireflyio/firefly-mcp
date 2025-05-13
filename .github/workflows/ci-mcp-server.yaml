@@ -48,6 +48,7 @@ jobs:
     with:
       appName: mcp-server
       branch: ${{ github.ref_name }}
+      slack: ${{ inputs.slack }}
       environment: ${{ startsWith(inputs.cluster, 'env') && 'dev' || inputs.cluster == 'eu' && 'stag' || 'prod' }}
       cluster: ${{ inputs.cluster }}
     secrets:
