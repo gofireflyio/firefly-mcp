@@ -15,7 +15,11 @@ on:
           - 'eu'
           - 'backend-cluster'
         default: 'env1'
-
+      slack:
+        type: boolean
+        description: Enable slack notifications
+        required: false
+        default: true
 permissions:
   contents: read
   id-token: write
