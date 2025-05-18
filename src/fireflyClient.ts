@@ -12,6 +12,7 @@ export interface InventoryArgs {
     arns?: string[];
     modifiedSince?: string;
     freeTextSearch?: string;
+    includeConfigration?: boolean;
 }
 
 export interface CodifyArgs {
@@ -98,7 +99,7 @@ export class FireflyClient {
                 method: "POST",
                 headers: this.getAuthHeaders(),
                 body: JSON.stringify({
-                    includeConfigration: false,
+                    includeConfigration: args.includeConfigration || false,
                     size: args.responseSize || 50,
                     // Only include parameters in the request if they are provided
                     ...(args.assetTypes ? { assetTypes: args.assetTypes } : {}),
