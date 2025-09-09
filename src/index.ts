@@ -33,6 +33,7 @@ async function main() {
         await localFireflyClient.login();
     }
 
+    // MCP server should not write stdout logs as it listens to the stdout. Check if it is changed
     if (debug) {
         logger.setLevel(logger.levels.DEBUG, true);
     } else {
@@ -136,12 +137,14 @@ async function main() {
         };
     });
 
+    // Hosted server needs to reset every hour to prevent timeout requests and issues connecting to the server
     if (hosting) {
         const app = express();
 
         app.get("/sse", async (req: express.Request, res: express.Response) => {
             logger.debug("Received connection");
 
+            // Authentication improved since then, this is not best practice
             let basicAuth = null;
             const authHeader = req.headers.authorization;
             if (authHeader && authHeader.startsWith("Basic ")) {
