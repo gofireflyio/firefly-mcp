@@ -8,8 +8,8 @@ import {
     ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 import minimist from 'minimist';
-import { FireflyClient, InventoryArgs, CodifyArgs } from './fireflyClient';
-import { InventoryTool, CodifyTool } from './tools';
+import { FireflyClient, InventoryArgs, CodifyArgs, GetInsightsArgs, CreateInsightArgs, UpdateInsightArgs, DeleteInsightArgs } from './fireflyClient';
+import { InventoryTool, CodifyTool, GetPolicesTool, CreatePolicyTool, UpdatePolicyTool, DeletePolicyTool } from './tools';
 import express from 'express';
 import * as logger from 'loglevel';
 import { RequestHandlerExtra } from "@modelcontextprotocol/sdk/dist/esm/shared/protocol";
@@ -53,6 +53,10 @@ async function main() {
                 tools: {
                     inventoryTool: InventoryTool,
                     codifyTool: CodifyTool,
+                    getPolicesTool: GetPolicesTool,
+                    createPolicyTool: CreatePolicyTool,
+                    updatePolicyTool: UpdatePolicyTool,
+                    deletePolicyTool: DeletePolicyTool,
                 },
             },
         },
@@ -110,6 +114,48 @@ async function main() {
                         };
                     }
 
+                    case "firefly_get_policies": {
+                        const policiesArgs = args as unknown as GetInsightsArgs;
+                        const response = await fireflyClient.getInsights(policiesArgs);
+                        return {
+                            content: [{ type: "text", text: JSON.stringify(response) }],
+                        };
+                    }
+
+                    case "firefly_create_policy": {
+                        const createArgs = args as unknown as CreateInsightArgs;
+                        if (!createArgs.name || !createArgs.code || !createArgs.type || !createArgs.providerIds) {
+                            throw new Error("Missing required arguments for creating policy");
+                        }
+                        const response = await fireflyClient.createInsight(createArgs);
+                        return {
+                            content: [{ type: "text", text: JSON.stringify(response) }],
+                        };
+                    }
+
+                    case "firefly_update_policy": {
+                        const updateArgs = args as unknown as UpdateInsightArgs;
+                        if (!updateArgs.id || !updateArgs.name || !updateArgs.code || 
+                            !updateArgs.type || !updateArgs.providerIds) {
+                            throw new Error("Missing required arguments for updating policy");
+                        }
+                        const response = await fireflyClient.updateInsight(updateArgs);
+                        return {
+                            content: [{ type: "text", text: JSON.stringify(response) }],
+                        };
+                    }
+
+                    case "firefly_delete_policy": {
+                        const deleteArgs = args as unknown as DeleteInsightArgs;
+                        if (!deleteArgs.id) {
+                            throw new Error("Missing required argument 'id' for deleting policy");
+                        }
+                        const response = await fireflyClient.deleteInsight(deleteArgs);
+                        return {
+                            content: [{ type: "text", text: JSON.stringify(response) }],
+                        };
+                    }
+
                     default:
                         throw new Error(`Unknown tool: ${toolName}`);
                 }
@@ -133,7 +179,7 @@ async function main() {
     server.setRequestHandler(ListToolsRequestSchema, async () => {
         logger.error("Received ListToolsRequest");
         return {
-            tools: [InventoryTool, CodifyTool],
+            tools: [InventoryTool, CodifyTool, GetPolicesTool, CreatePolicyTool, UpdatePolicyTool, DeletePolicyTool],
         };
     });
 
