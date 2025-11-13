@@ -103,6 +103,8 @@ export class FireflyClient {
         return {
             Authorization: `Bearer ${this.accessToken}`,
             "Content-Type": "application/json",
+            "firefly-mcp-server": "true",
+            "firefly-mcp-server-version": "1.0.0",
         };
     }
 
