@@ -29,7 +29,7 @@ async function main() {
         if (!accessKey || !secretKey) {
             throw new Error("Missing access-key or secret-key");
         }
-        localFireflyClient = new FireflyClient(logger, hosting ? false : true, accessKey, secretKey);
+        localFireflyClient = new FireflyClient(logger, hosting, accessKey, secretKey);
         await localFireflyClient.login();
     }
 
