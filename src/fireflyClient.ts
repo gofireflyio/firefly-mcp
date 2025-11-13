@@ -81,7 +81,7 @@ export class FireflyClient {
     private accessToken: string | null = null;
     private logger: any;
     
-    constructor(logger: any, private accessKey?: string, private secretKey?: string) {
+    constructor(logger: any, private isHosted: boolean, private accessKey?: string, private secretKey?: string) {
         this.logger = logger;
         
         // Use environment variables if not provided as constructor arguments
@@ -103,6 +103,9 @@ export class FireflyClient {
         return {
             Authorization: `Bearer ${this.accessToken}`,
             "Content-Type": "application/json",
+            "firefly-mcp-server": "true",
+            "firefly-mcp-server-version": "1.0.0",
+            "firefly-mcp-server-hosted": this.isHosted ? "true" : "false",
         };
     }
 

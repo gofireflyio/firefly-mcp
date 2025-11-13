@@ -13,7 +13,7 @@ The Firefly MCP (Model Context Protocol) server is a TypeScript-based server tha
 
 ## Prerequisites
 
-- Node.js (v14 or higher)
+- Node.js (v20 or higher)
 - npm or yarn
 - Firefly account with generated access keys
 
@@ -30,11 +30,13 @@ npx @fireflyai/firefly-mcp
 You can provide your Firefly credentials in two ways:
 
 1. Using environment variables:
+
 ```bash
 FIREFLY_ACCESS_KEY=your_access_key FIREFLY_SECRET_KEY=your_secret_key npx @fireflyai/firefly-mcp
 ```
 
 2. Using arguments:
+
 ```bash
 npx @fireflyai/firefly-mcp --access-key your_access_key --secret-key your_secret_key
 ```
@@ -43,7 +45,8 @@ npx @fireflyai/firefly-mcp --access-key your_access_key --secret-key your_secret
 
 ### Stdio
 
-Update the `mcp.json` file with the following:  
+Update the `mcp.json` file with the following:
+
 ```bash
 {
   "mcpServers": {
@@ -60,11 +63,13 @@ Update the `mcp.json` file with the following:
 ```
 
 Run the MCP server using one of the methods above with the following command:
+
 ```bash
 npx @fireflyai/firefly-mcp --sse --port 6001
 ```
 
 Update the `mcp.json` file with the following:
+
 ```bash
 {
   "mcpServers": {
@@ -83,12 +88,14 @@ Update the `mcp.json` file with the following:
 
 #### Example:
 
-##### Prompt 
+##### Prompt
+
 ```
 Find all "ubuntu-prod" EC2 instance in 123456789012 AWS account and codify it into Terraform
 ```
 
 ##### Response
+
 ```
 resource "aws_instance" "ubuntu-prod" {
   ami           = "ami-0c55b159cbfafe1f0"
