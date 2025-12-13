@@ -1,0 +1,9 @@
+version: 2
+registries:
+  github-private:
+    type: git
+    url: https://github.com/
+    username: x-access-token
+    password: ${{ secrets.GLOBAL_PAT }}
+
+updates:
