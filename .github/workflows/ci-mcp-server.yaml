@@ -1,5 +1,5 @@
 name: CI MCP-SERVER Deploy
-run-name: ${{ startsWith(inputs.cluster, 'env') && 'dev' || inputs.cluster == 'eu' && 'stag' || 'prod' }}-${{ inputs.cluster }}-mcp-server Deployment Pipeline
+run-name: ${{ inputs.environment }}-${{ inputs.cluster }}-mcp-server Deployment Pipeline
 
 on:
   workflow_dispatch:
