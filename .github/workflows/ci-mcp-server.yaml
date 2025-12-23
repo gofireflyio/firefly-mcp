@@ -4,22 +4,26 @@ run-name: ${{ startsWith(inputs.cluster, 'env') && 'dev' || inputs.cluster == 'e
 on:
   workflow_dispatch:
     inputs:
-      cluster:
+      environment:
         type: choice
-        description: 'Cluster'
+        description: 'Environment name.'
         required: true
         options:
-          - 'env3'
-          - 'env2'
-          - 'env1'
-          - 'eu'
-          - 'backend-cluster'
-        default: 'env1'
+          - 'dev'
+          - 'stag'
+          - 'prod'
+        default: 'dev'
+      cluster:
+        type: string
+        description: 'https://argocd.firefly.ai/settings/clusters'
+        required: true
+        default: 'env3'
       slack:
         type: boolean
         description: Enable slack notifications
         required: false
         default: true
+
 permissions:
   contents: read
   id-token: write
@@ -36,7 +40,7 @@ jobs:
       event_name: ${{ github.event_name }}
       app-name: mcp-server
       latest: true
-      environment: ${{ startsWith(inputs.cluster, 'env') && 'dev' || inputs.cluster == 'eu' && 'stag' || 'prod' }} 
+      environment: ${{ inputs.environment }}
       cluster: ${{ inputs.cluster }}
     secrets:
       GLOBAL_PAT_USERNAME: ${{ secrets.GLOBAL_PAT_USERNAME }}
@@ -53,7 +57,7 @@ jobs:
       appName: mcp-server
       branch: ${{ github.ref_name }}
       slack: ${{ inputs.slack }}
-      environment: ${{ startsWith(inputs.cluster, 'env') && 'dev' || inputs.cluster == 'eu' && 'stag' || 'prod' }}
+      environment: ${{ inputs.environment }}
       cluster: ${{ inputs.cluster }}
     secrets:
       CI_ACCOUNT_ID: ${{ secrets.CI_ACCOUNT_ID }}
