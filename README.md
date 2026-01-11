@@ -1,5 +1,7 @@
 [![Firefly](https://infralight-templates-public.s3.amazonaws.com/company-logos/firefly_logo_white.png)](https://firefly.ai)
 
+[![Trust Score](https://archestra.ai/mcp-catalog/api/badge/quality/gofireflyio/firefly-mcp)](https://archestra.ai/mcp-catalog/gofireflyio__firefly-mcp)
+
 # Firefly MCP Server
 
 The Firefly MCP (Model Context Protocol) server is a TypeScript-based server that enables seamless integration with the Firefly platform. It allows you to discover, manage, and codify resources across your Cloud and SaaS accounts connected to Firefly.
