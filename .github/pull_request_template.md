@@ -14,5 +14,7 @@
 - [ ] Unit tests covering my changes are included
 - [ ] I successfully ran my code on my local setup
 - [ ] This branch has been successfully deployed in a development environment
+- [ ] This branch has been successfully deployed to staging environment
+- [ ] All required environment variables have been updated via ArgoCD
 - [ ] My code follows the project's style guidelines and has been linted
 - [ ] Documentation have been added / updated (please add a link)
