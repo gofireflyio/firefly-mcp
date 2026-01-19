@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/gofireflyio-firefly-mcp-badge.png)](https://mseep.ai/app/gofireflyio-firefly-mcp)
+
 [![Firefly](https://infralight-templates-public.s3.amazonaws.com/company-logos/firefly_logo_white.png)](https://firefly.ai)
 
 # Firefly MCP Server
