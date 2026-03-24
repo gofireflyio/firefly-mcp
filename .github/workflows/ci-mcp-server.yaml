@@ -30,7 +30,7 @@ permissions:
 
 jobs:
   call-node-workflow:
-    uses: infralight/.github/.github/workflows/node-ecr-image-managed.yaml@master
+    uses: infralight/.github/.github/workflows/node-ecr-image-managed.yaml@5a6cb3462fa8ca2fb0a7564a03f5f6c475fa6306 # master
     with:
       arm64: true
       node-version: '14.x'
@@ -52,7 +52,7 @@ jobs:
 
   argocd-sync:
     needs: call-node-workflow
-    uses: infralight/.github/.github/workflows/argocd-sync.yaml@master
+    uses: infralight/.github/.github/workflows/argocd-sync.yaml@5a6cb3462fa8ca2fb0a7564a03f5f6c475fa6306 # master
     with:
       appName: mcp-server
       branch: ${{ github.ref_name }}
