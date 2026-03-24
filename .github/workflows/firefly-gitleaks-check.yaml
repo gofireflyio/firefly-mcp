@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
       - name: Install Gitleaks
         run: |
           wget https://github.com/gitleaks/gitleaks/releases/download/v8.18.2/gitleaks_8.18.2_linux_x64.tar.gz
@@ -33,7 +33,7 @@ jobs:
       - name: Send to Slack if sensitive data found
         if: steps.gitleaks.outputs.exitcode == 1
         id: slack-send
-        uses: rtCamp/action-slack-notify@v2
+        uses: rtCamp/action-slack-notify@cdf0a2130cbcdfd82ba5fcac8e076370bf381b36 # v2
         env:
           SLACK_ICON: https://avatars.slack-edge.com/2022-03-12/3228412958213_797a01c4347dd0e18e8f_102.png
           SLACK_COLOR: ${{ steps.gitleaks.outputs.exitcode == 1 && 'failure' || 'success'}}
