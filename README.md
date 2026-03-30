@@ -11,6 +11,10 @@ The Firefly MCP (Model Context Protocol) server is a TypeScript-based server tha
 - 🔐 Secure Authentication: Uses FIREFLY_ACCESS_KEY and FIREFLY_SECRET_KEY for secure communication
 - 🚀 Easy Integration: Works seamlessly with Claude and Cursor
 
+## Hosted deployment
+
+A hosted deployment is available on [Fronteir AI](https://fronteir.ai/mcp/gofireflyio-firefly-mcp).
+
 ## Prerequisites
 
 - Node.js (v20 or higher)
