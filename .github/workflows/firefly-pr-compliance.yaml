@@ -7,6 +7,7 @@ on:
     
 jobs:
   firefly-pr-compliance-checks:
+    if: github.event.pull_request.user.login != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
     - name: Validate PR and Branch Name Associated with JIRA Ticket Prefix
