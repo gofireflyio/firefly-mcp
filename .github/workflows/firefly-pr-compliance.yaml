@@ -4,7 +4,8 @@ on:
   pull_request:
     types: ["opened", "reopened", "edited", "synchronize"]
     branches: ["main", "master"]
-    
+
+
 jobs:
   firefly-pr-compliance-checks:
     if: github.event.pull_request.user.login != 'dependabot[bot]'
@@ -18,7 +19,7 @@ jobs:
         branch_name_lo=$( echo "$branch_name" | awk '{print tolower($0)}' )
         pr_title_lo=$( echo "$pr_title" | awk '{print tolower($0)}' )
         exit_code=0
-        
+
         if [[ ! "$branch_name_lo" =~ ^infl\-[0-9]{4}.*$ ]]; then
           echo
           echo "[COMPLIANCE ERROR - BRANCH NAME]"
